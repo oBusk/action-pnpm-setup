@@ -1,0 +1,47 @@
+name: "pnpm setup"
+description: "Sets up the repository with pnpm (with caching)"
+inputs:
+  options:
+    description: 'Additional pnpm install options or flags (e.g. "--filter !@scope/tool1")'
+    required: false
+    default: ""
+runs:
+  using: "composite"
+  steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        standalone: true
+
+    - name: Resolve pnpm store path
+      id: pnpm-store
+      shell: bash
+      run: |
+        STORE_PATH=$(pnpm store path --silent)
+        printf 'path=%s\n' "$STORE_PATH" >> "$GITHUB_OUTPUT"
+
+    - name: Cache pnpm store
+      uses: actions/cache@v4
+      with:
+        path: ${{ steps.pnpm-store.outputs.path }}
+        # Include install options in the cache key so different install configs don't share stores
+        key: pnpm-store-${{ runner.os }}-${{ inputs.options }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          pnpm-store-${{ runner.os }}-${{ inputs.options }}-
+          pnpm-store-${{ runner.os }}
+
+    - name: Install dependencies
+      shell: bash
+      env:
+        CI: true
+        SKIP_INSTALL_SIMPLE_GIT_HOOKS: 1
+      run: |
+        INSTALL_OPTIONS="${{ inputs.options }}"
+
+        if [ -n "$INSTALL_OPTIONS" ]; then
+          echo -e "\033[34mpnpm install --frozen-lockfile $INSTALL_OPTIONS\033[0m"
+          pnpm install --frozen-lockfile $INSTALL_OPTIONS
+        else
+          pnpm install --frozen-lockfile "$INSTALL_OPTIONS"
+          pnpm install --frozen-lockfile
+        fi

@@ -1,0 +1,33 @@
+{
+  "name": "@obusk/action-pnpm-setup",
+  "private": true,
+  "version": "0.0.0",
+  "description": "A small composite action to make setting up pnpm with cache easy",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24.11.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@10.20.0",
+  "simple-git-hooks": {
+    "pre-commit": "pnpm run lint-staged"
+  },
+  "lint-staged": {
+    "**/*.{md,js,json,yaml,yml}": [
+      "prettier --ignore-path .gitignore --ignore-path .prettierignore --write"
+    ]
+  },
+  "scripts": {
+    "prettier": "prettier --ignore-path .gitignore --ignore-path .prettierignore --write '**/*.{ts,js,json,md,yml}'",
+    "versions": "which node && node -v && which pnpm && pnpm -v && which npm && npm -v"
+  },
+  "author": "Oscar Busk <oscar.busk@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "lint-staged": "^16.2.6",
+    "prettier": "^3.6.2",
+    "simple-git-hooks": "^2.13.1"
+  }
+}

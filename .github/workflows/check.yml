@@ -1,0 +1,24 @@
+name: Check
+
+on: [push, pull_request]
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+        # Use itself to setup pnpm with caching
+      - uses: .
+
+      - name: Run prettier
+        run: pnpm run prettier
+
+      - name: Print versions
+        shell: bash
+        run: |
+          echo -e "\033[34mnode -v\033[0m"
+          node -v
+          echo -e "\033[34mpnpm -v\033[0m"
+          pnpm -v
+          pnpm run versions
