@@ -11,9 +11,6 @@ jobs:
         # Use itself to setup pnpm with caching
       - uses: ./
 
-      - name: Run prettier
-        run: pnpm run prettier
-
       - name: Print versions
         shell: bash
         run: |
@@ -22,3 +19,6 @@ jobs:
           echo -e "\033[34mpnpm -v\033[0m"
           pnpm -v
           pnpm run versions
+
+      - name: Run prettier
+        run: pnpm run prettier
