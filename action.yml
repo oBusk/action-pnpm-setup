@@ -40,8 +40,8 @@ runs:
 
         if [ -n "$INSTALL_OPTIONS" ]; then
           echo -e "\033[34mpnpm install --frozen-lockfile $INSTALL_OPTIONS\033[0m"
-          pnpm install --frozen-lockfile $INSTALL_OPTIONS
-        else
           pnpm install --frozen-lockfile "$INSTALL_OPTIONS"
+        else
+          echo -e "\033[34mpnpm install --frozen-lockfile\033[0m"
           pnpm install --frozen-lockfile
         fi
