@@ -45,3 +45,10 @@ runs:
           echo -e "\033[34mpnpm install --frozen-lockfile\033[0m"
           pnpm install --frozen-lockfile
         fi
+
+    - name: Prune pnpm store
+      if: always()
+      shell: bash
+      run: |
+        echo -e "\033[34mpnpm store prune\033[0m"
+        pnpm store prune
