@@ -47,8 +47,7 @@ runs:
         fi
 
     - name: Prune pnpm store
-      if: always()
       shell: bash
       run: |
         echo -e "\033[34mpnpm store prune\033[0m"
-        pnpm store prune
+        pnpm store prune || true
