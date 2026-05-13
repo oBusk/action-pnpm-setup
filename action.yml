@@ -9,7 +9,7 @@ runs:
   using: "composite"
   steps:
     - name: Install pnpm
-      uses: pnpm/action-setup@v4
+      uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
       with:
         standalone: true
 
@@ -21,7 +21,7 @@ runs:
         printf 'path=%s\n' "$STORE_PATH" >> "$GITHUB_OUTPUT"
 
     - name: Cache pnpm store
-      uses: actions/cache@v4
+      uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
       with:
         path: ${{ steps.pnpm-store.outputs.path }}
         # Include install options in the cache key so different install configs don't share stores
