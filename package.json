@@ -6,13 +6,17 @@
   "devEngines": {
     "runtime": {
       "name": "node",
-      "version": "^24.11.0",
+      "version": "24",
+      "onFail": "download"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11",
       "onFail": "download"
     }
   },
-  "packageManager": "pnpm@10.20.0",
   "simple-git-hooks": {
-    "pre-commit": "pnpm run lint-staged"
+    "pre-commit": "pnpm exec lint-staged"
   },
   "lint-staged": {
     "**/*.{md,js,json,yaml,yml}": [
@@ -26,8 +30,8 @@
   "author": "Oscar Busk <oscar.busk@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "lint-staged": "^16.2.6",
-    "prettier": "^3.6.2",
+    "lint-staged": "^17.0.4",
+    "prettier": "^3.8.3",
     "simple-git-hooks": "^2.13.1"
   }
 }
